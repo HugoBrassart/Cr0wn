@@ -14,6 +14,8 @@ import java.sql.Statement;
 
 public class LoginController {
     @FXML
+    public Button loginButton;
+    @FXML
     private Button cancelButton;
     @FXML
 private Label loginMessageLabel;
@@ -42,7 +44,7 @@ private TextField usernameTextField;
         DatabaseConnection connectNow = new DatabaseConnection();
         Connection connectDB =connectNow.getConnection();
 
-        String verifyLogin = "SELECT count(1) FROM useraccounts WHERE username = '" + usernameTextField.getText() + "' AND password = '" + passwordPasswordField.getText() + "'";
+        String verifyLogin = "SELECT count(1) FROM user_accounts WHERE username = '" + usernameTextField.getText() + "' AND password = '" + passwordPasswordField.getText() + "'";
 
         try {
             Statement statement = connectDB.createStatement();
