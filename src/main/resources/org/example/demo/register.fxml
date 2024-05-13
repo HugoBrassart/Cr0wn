@@ -5,68 +5,75 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #161616;"
-            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.example.demo.RegisterController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #161616;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo.RegisterController">
    <AnchorPane prefHeight="90.0" prefWidth="600.0" style="-fx-background-color: #550000;">
-      <Label layoutX="25.0" layoutY="15.0" prefHeight="60.0" prefWidth="214.0" text="Inscription" textFill="WHITE">
+      <Label layoutX="133.0" layoutY="30.0" prefHeight="60.0" prefWidth="214.0" text="Inscription" textFill="WHITE">
          <font>
-            <Font name="Bookman Old Style" size="40.0"/>
+            <Font name="Bookman Old Style" size="40.0" />
          </font>
          <effect>
-            <DropShadow/>
+            <DropShadow />
          </effect>
       </Label>
+      <ImageView fitHeight="60.0" fitWidth="82.0" layoutX="31.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Images/cr0wn.png" />
+         </image>
+      </ImageView>
    </AnchorPane>
    <Label alignment="CENTER" layoutX="24.0" layoutY="142.0" text="Prenom" textFill="WHITE">
       <font>
-         <Font name="Bookman Old Style" size="16.0"/>
+         <Font name="Bookman Old Style" size="16.0" />
       </font>
    </Label>
-   <TextField fx:id="firstnameTextField" layoutX="24.0" layoutY="167.0" prefHeight="26.0" prefWidth="214.0"
-              promptText="Prenom"/>
+   <TextField fx:id="firstnameTextField" layoutX="24.0" layoutY="167.0" prefHeight="26.0" prefWidth="214.0" promptText="Prenom" />
    <Label alignment="CENTER" layoutX="24.0" layoutY="275.0" text="Identifiant" textFill="WHITE">
       <font>
-         <Font name="Bookman Old Style" size="16.0"/>
+         <Font name="Bookman Old Style" size="16.0" />
       </font>
    </Label>
-   <TextField fx:id="usernameTextField" layoutX="24.0" layoutY="295.0" prefHeight="26.0" prefWidth="214.0"
-              promptText="Identifiant"/>
+   <TextField fx:id="usernameTextField" layoutX="24.0" layoutY="295.0" prefHeight="26.0" prefWidth="214.0" promptText="Identifiant" />
    <Label alignment="CENTER" layoutX="24.0" layoutY="209.0" text="Nom" textFill="WHITE">
       <font>
-         <Font name="Bookman Old Style" size="16.0"/>
+         <Font name="Bookman Old Style" size="16.0" />
       </font>
    </Label>
-   <TextField fx:id="lastnameTextField" layoutX="24.0" layoutY="228.0" prefHeight="26.0" prefWidth="214.0"
-              promptText="Nom"/>
-   <PasswordField fx:id="setPasswordField" layoutX="311.0" layoutY="167.0" prefHeight="26.0" prefWidth="249.0"
-                  promptText="*************"/>
+   <TextField fx:id="lastnameTextField" layoutX="24.0" layoutY="228.0" prefHeight="26.0" prefWidth="214.0" promptText="Nom" />
+   <PasswordField fx:id="setPasswordField" layoutX="311.0" layoutY="167.0" prefHeight="26.0" prefWidth="249.0" promptText="*************" />
    <Label alignment="CENTER" layoutX="310.0" layoutY="142.0" text="Mot de passe" textFill="WHITE">
       <font>
-         <Font name="Bookman Old Style" size="16.0"/>
+         <Font name="Bookman Old Style" size="16.0" />
       </font>
    </Label>
-   <PasswordField fx:id="confirmPasswordField" layoutX="311.0" layoutY="241.0" prefHeight="26.0" prefWidth="249.0"
-                  promptText="*************"/>
+   <PasswordField fx:id="confirmPasswordField" layoutX="311.0" layoutY="241.0" prefHeight="26.0" prefWidth="249.0" promptText="*************" />
    <Label alignment="CENTER" layoutX="311.0" layoutY="219.0" text="Confirmation du mot de passe" textFill="WHITE">
       <font>
-         <Font name="Bookman Old Style" size="15.0"/>
+         <Font name="Bookman Old Style" size="15.0" />
       </font>
    </Label>
-   <Button fx:id="registerButton" alignment="CENTER" layoutX="313.0" layoutY="291.0" mnemonicParsing="false"
-           prefHeight="34.0" prefWidth="97.0" style="-fx-background-color: #550000;" text="S'inscrire" textFill="WHITE">
+   <Button fx:id="registerButton" alignment="CENTER" layoutX="313.0" layoutY="291.0" mnemonicParsing="false" onAction="#registerButtonOnAction" prefHeight="34.0" prefWidth="97.0" style="-fx-background-color: #550000;" text="S'inscrire" textFill="WHITE">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Button>
-   <Button fx:id="closeButton" alignment="CENTER" layoutX="463.0" layoutY="291.0" mnemonicParsing="false"
-           prefHeight="34.0" prefWidth="97.0" style="-fx-background-color: #550000;" text="Retour" textFill="WHITE">
+   <Button fx:id="closeButton" alignment="CENTER" layoutX="463.0" layoutY="291.0" mnemonicParsing="false" onAction="#closeButtonOnAction" prefHeight="34.0" prefWidth="97.0" style="-fx-background-color: #550000;" text="Retour" textFill="WHITE">
       <font>
-         <Font size="14.0"/>
+         <Font size="14.0" />
       </font>
    </Button>
+   <Label fx:id="registrationMessageLabel" alignment="CENTER" layoutX="26.0" layoutY="101.0" prefHeight="34.0" prefWidth="554.0" textFill="#00bf0d">
+      <font>
+         <Font size="15.0" />
+      </font>
+   </Label>
+   <Label fx:id="confirmPasswordLabel" layoutX="311.0" layoutY="192.0" prefHeight="34.0" prefWidth="350.0" textFill="RED">
+      <font>
+         <Font size="15.0" />
+      </font>
+   </Label>
 </AnchorPane>
