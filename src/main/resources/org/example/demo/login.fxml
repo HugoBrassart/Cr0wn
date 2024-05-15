@@ -85,7 +85,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button fx:id="registerButton" layoutX="188.0" layoutY="256.0" mnemonicParsing="false" onAction="#createAccountForm" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #550000;" text="S'INSCRIRE" textFill="WHITE">
+            <Button fx:id="registerButton" layoutX="188.0" layoutY="256.0" mnemonicParsing="false" onAction="#createDashboard" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #550000;" text="S'INSCRIRE" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>

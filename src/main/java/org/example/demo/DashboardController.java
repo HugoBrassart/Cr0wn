@@ -1,21 +1,40 @@
 package org.example.demo;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-public class DashboardController {
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.*;
 
-    @FXML
-    private TableView<?> addStudents_TableView;
+public class DashboardController implements Initializable {
+
+
+    private Connection connectDB;
+    private PreparedStatement preparedStatement;
+    private Statement statement;
+    private ResultSet queryResult;
+
+private Image image;
 
     @FXML
     private Button addStudents_addBtn;
@@ -30,28 +49,31 @@ public class DashboardController {
     private Button addStudents_clearBtn;
 
     @FXML
-    private TableColumn<?, ?> addStudents_col_birth;
+    private TableView<studentData> addStudents_tableView;
 
     @FXML
-    private TableColumn<?, ?> addStudents_col_course;
+    private TableColumn<studentData, String> addStudents_col_birth;
 
     @FXML
-    private TableColumn<?, ?> addStudents_col_firstName;
+    private TableColumn<studentData, String> addStudents_col_course;
 
     @FXML
-    private TableColumn<?, ?> addStudents_col_gender;
+    private TableColumn<studentData, String> addStudents_col_firstName;
 
     @FXML
-    private TableColumn<?, ?> addStudents_col_lastName;
+    private TableColumn<studentData, String> addStudents_col_gender;
 
     @FXML
-    private TableColumn<?, ?> addStudents_col_status;
+    private TableColumn<studentData, String> addStudents_col_lastName;
 
     @FXML
-    private TableColumn<?, ?> addStudents_col_studentNum;
+    private TableColumn<studentData, String> addStudents_col_status;
 
     @FXML
-    private TableColumn<?, ?> addStudents_col_year;
+    private TableColumn<studentData, String> addStudents_col_studentNum;
+
+    @FXML
+    private TableColumn<studentData, String> addStudents_col_year;
 
     @FXML
     private ComboBox<?> addStudents_course;
@@ -220,5 +242,216 @@ public class DashboardController {
 
     @FXML
     private Label username;
+
+    public ObservableList<studentData> addStudentsListData() {
+
+        ObservableList<studentData> listStudents = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM student";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB =connectNow.getConnection();
+
+        try {
+            studentData studentD;
+
+
+            preparedStatement = (PreparedStatement) connectDB.createStatement();
+            queryResult = preparedStatement.executeQuery();
+
+            while (queryResult.next()) {
+                studentD = new studentData(queryResult.getInt("studentNum"),
+                        queryResult.getString("year"),
+                        queryResult.getString("course"),
+                        queryResult.getString("firstName"),
+                        queryResult.getString("lastName"),
+                        queryResult.getString("gender"),
+                        queryResult.getDate("birth"),
+                        queryResult.getString("status"),
+                        queryResult.getString("image"));
+
+                listStudents.add(studentD);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listStudents;
+    }
+    private ObservableList<studentData> addStudentsListD;
+
+    public void addStudentsShowListData() {
+        addStudentsListD = addStudentsListData();
+
+        addStudents_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
+        addStudents_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
+        addStudents_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
+        addStudents_col_firstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        addStudents_col_lastName.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        addStudents_col_gender.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        addStudents_col_birth.setCellValueFactory(new PropertyValueFactory<>("birth"));
+        addStudents_col_status.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        addStudents_tableView.setItems(addStudentsListD);
+
+    }
+
+    public void addStudentsSelect() {
+
+        studentData studentD = addStudents_tableView.getSelectionModel().getSelectedItem();
+        int num = addStudents_tableView.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        addStudents_studentNum.setText(String.valueOf(studentD.getStudentNum()));
+        addStudents_firstName.setText(studentD.getFirstName());
+        addStudents_lastName.setText(studentD.getLastName());
+        addStudents_birth.setValue(LocalDate.parse(String.valueOf(studentD.getBirth())));
+
+        String uri = "file:" + studentD.getImage();
+
+        image = new Image(uri, 124, 144, false, true);
+        addStudents_imageView.setImage(image);
+
+        getData.path = studentD.getImage();
+
+    }
+    private String[] yearList = {"Première année", "Seconde année", "Licence"};
+
+    public void addStudentsYearList() {
+
+        List<String> yearL = new ArrayList<>();
+
+        for (String data : yearList) {
+            yearL.add(data);
+        }
+
+        ObservableList ObList = FXCollections.observableArrayList(yearL);
+        addStudents_year.setItems(ObList);
+
+    }
+
+    private String[] genderList = {"Masculin", "Féminin"};
+
+    public void addStudentsGenderList() {
+        List<String> genderL = new ArrayList<>();
+
+        for (String data : genderList) {
+            genderL.add(data);
+        }
+
+        ObservableList ObList = FXCollections.observableArrayList(genderL);
+        addStudents_gender.setItems(ObList);
+    }
+
+    private String[] statusList = {"Accepté", "Refusé", "En cours"};
+
+    public void addStudentsStatusList() {
+        List<String> statusL = new ArrayList<>();
+
+        for (String data : statusList) {
+            statusL.add(data);
+        }
+
+        ObservableList ObList = FXCollections.observableArrayList(statusL);
+        addStudents_status.setItems(ObList);
+    }
+
+    public void logout() {
+
+        try {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Message de confirmation ");
+            alert.setHeaderText(null);
+            alert.setContentText("Vous voulez vraiment vous deconnecter ?");
+
+            Optional<ButtonType> option = alert.showAndWait();
+
+            if (option.get().equals(ButtonType.OK)) {
+
+                logout.getScene().getWindow().hide();
+
+                Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("login.fxml")));
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+
+
+                stage.initStyle(StageStyle.TRANSPARENT);
+
+                stage.setScene(scene);
+                stage.show();
+
+            } else {
+                return;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void switchForm(ActionEvent event) {
+        if (event.getSource() == home_btn) {
+            home_form.setVisible(true);
+            addStudents_form.setVisible(false);
+            availableCourse_form.setVisible(false);
+            studentGrade_form.setVisible(false);
+
+
+
+
+        } else if (event.getSource() == addStudents_btn) {
+            home_form.setVisible(false);
+            addStudents_form.setVisible(true);
+            availableCourse_form.setVisible(false);
+            studentGrade_form.setVisible(false);
+
+            addStudentsShowListData();
+            addStudentsYearList();
+            addStudentsGenderList();
+            addStudentsStatusList();
+
+
+        } else if (event.getSource() == availableCourse_btn) {
+            home_form.setVisible(false);
+            addStudents_form.setVisible(false);
+            availableCourse_form.setVisible(true);
+            studentGrade_form.setVisible(false);
+
+
+        } else if (event.getSource() == studentGrade_btn) {
+            home_form.setVisible(false);
+            addStudents_form.setVisible(false);
+            availableCourse_form.setVisible(false);
+            studentGrade_form.setVisible(true);
+
+
+        }
+    }
+
+    public void close(){
+        System.exit(0);
+    }
+public void minimize(){
+    Stage stage = (Stage) main_form.getScene().getWindow();
+    stage.setIconified(true);
+}
+
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources){
+        addStudentsShowListData();
+        addStudentsYearList();
+        addStudentsGenderList();
+        addStudentsStatusList();
+
+
+    }
+
 
 }

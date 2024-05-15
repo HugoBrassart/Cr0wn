@@ -26,37 +26,7 @@
    <children>
       <AnchorPane fx:id="main_form" prefHeight="200.0" prefWidth="200.0">
          <children>
-            <BorderPane prefHeight="50.0" prefWidth="900.0" style="-fx-background-color: #550000;">
-               <top>
-                  <AnchorPane prefHeight="50.0" prefWidth="933.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <SVGPath content="M 6 9 L 17 9 C 12 8 11 8 6 9 C 8 8 5 5 7 2 C 6.6667 3.3333 7 6 8 6 C 9 6 8.801 5.002 9 3 C 9.202 5.004 9 6 10 6 C 11.503 5.979 11 5 11.5 1 C 12 5 11.503 5.979 13 6 C 14 6 13.807 4.994 14 3 C 14.194 4.994 14 6 15 6 C 16 5 16.358 3.463 16 2 C 18 5 15 8 17 9" fill="WHITE" layoutX="30.0" layoutY="18.0" scaleX="5.0" scaleY="5.0" />
-                        <Label layoutY="23.0" text="Cr0wn Gestionnaire d'élèves" textFill="WHITE" translateX="68.0">
-                           <font>
-                              <Font name="Bookman Old Style" size="17.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="close" layoutX="858.0" layoutY="13.0" mnemonicParsing="false" prefHeight="22.0" prefWidth="31.0" style="-fx-background-color: none;">
-                           <graphic>
-                              <SVGPath content="M10.185,1.417c-4.741,0-8.583,3.842-8.583,8.583c0,4.74,3.842,8.582,8.583,8.582S18.768,14.74,18.768,10C18.768,5.259,14.926,1.417,10.185,1.417 M10.185,17.68c-4.235,0-7.679-3.445-7.679-7.68c0-4.235,3.444-7.679,7.679-7.679S17.864,5.765,17.864,10C17.864,14.234,14.42,17.68,10.185,17.68 M10.824,10l2.842-2.844c0.178-0.176,0.178-0.46,0-0.637c-0.177-0.178-0.461-0.178-0.637,0l-2.844,2.841L7.341,6.52c-0.176-0.178-0.46-0.178-0.637,0c-0.178,0.176-0.178,0.461,0,0.637L9.546,10l-2.841,2.844c-0.178,0.176-0.178,0.461,0,0.637c0.178,0.178,0.459,0.178,0.637,0l2.844-2.841l2.844,2.841c0.178,0.178,0.459,0.178,0.637,0c0.178-0.176,0.178-0.461,0-0.637L10.824,10z" fill="WHITE" scaleX="2.0" scaleY="2.0" />
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button fx:id="minimize" layoutX="810.0" layoutY="13.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="26.0" style="-fx-background-color: none;" textFill="#ffffff00">
-                           <graphic>
-                              <SVGPath content="M14.776,10c0,0.239-0.195,0.434-0.435,0.434H5.658c-0.239,0-0.434-0.195-0.434-0.434s0.195-0.434,0.434-0.434h8.684C14.581,9.566,14.776,9.762,14.776,10 M18.25,10c0,4.558-3.693,8.25-8.25,8.25c-4.557,0-8.25-3.691-8.25-8.25c0-4.557,3.693-8.25,8.25-8.25C14.557,1.75,18.25,5.443,18.25,10 M17.382,10c0-4.071-3.312-7.381-7.382-7.381C5.929,2.619,2.619,5.93,2.619,10c0,4.07,3.311,7.382,7.381,7.382C14.07,17.383,17.382,14.07,17.382,10" fill="WHITE" scaleX="2.0" scaleY="2.0" />
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-               </top>
-            </BorderPane>
-            <BorderPane prefHeight="400.0" prefWidth="600.0">
+            <BorderPane prefHeight="400.0" prefWidth="894.0">
                <left>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                      <children>
@@ -69,7 +39,7 @@
                                  </font>
                               </Label>
                               <Line endX="74.70002746582031" endY="-1.52587890625E-5" layoutX="141.0" layoutY="190.0" startX="-100.0" stroke="WHITE" />
-                              <Button fx:id="home_btn" alignment="TOP_LEFT" layoutX="25.0" layoutY="191.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="122.0" style="-fx-background-color: none;" text="Accueil" textFill="WHITE">
+                              <Button fx:id="home_btn" alignment="TOP_LEFT" layoutX="25.0" layoutY="191.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="24.0" prefWidth="122.0" style="-fx-background-color: none;" text="Accueil" textFill="WHITE">
                                  <font>
                                     <Font name="Bookman Old Style" size="17.0" />
                                  </font>
@@ -80,7 +50,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="addStudents_btn" alignment="TOP_LEFT" layoutX="25.0" layoutY="223.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="206.0" style="-fx-background-color: none;" text="Ajouter des élèves" textFill="WHITE">
+                              <Button fx:id="addStudents_btn" alignment="TOP_LEFT" layoutX="25.0" layoutY="223.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="37.0" prefWidth="206.0" style="-fx-background-color: none;" text="Ajouter des élèves" textFill="WHITE">
                                  <font>
                                     <Font name="Bookman Old Style" size="17.0" />
                                  </font>
@@ -91,7 +61,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="availableCourse_btn" alignment="TOP_LEFT" layoutX="23.0" layoutY="258.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="207.0" style="-fx-background-color: none;" text="Cours disponibles" textFill="WHITE">
+                              <Button fx:id="availableCourse_btn" alignment="TOP_LEFT" layoutX="23.0" layoutY="258.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="28.0" prefWidth="207.0" style="-fx-background-color: none;" text="Cours disponibles" textFill="WHITE">
                                  <font>
                                     <Font name="Bookman Old Style" size="17.0" />
                                  </font>
@@ -102,7 +72,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="studentGrade_btn" alignment="TOP_LEFT" layoutX="25.0" layoutY="292.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="208.0" style="-fx-background-color: none;" text="Notes des élèves" textFill="WHITE">
+                              <Button fx:id="studentGrade_btn" alignment="TOP_LEFT" layoutX="25.0" layoutY="292.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="28.0" prefWidth="208.0" style="-fx-background-color: none;" text="Notes des élèves" textFill="WHITE">
                                  <font>
                                     <Font name="Bookman Old Style" size="17.0" />
                                  </font>
@@ -113,7 +83,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Button>
-                              <Button fx:id="logout" layoutX="11.0" layoutY="504.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="22.0" rotate="-90.0" scaleX="2.0" scaleY="2.0" style="-fx-background-color: none;" textFill="WHITE">
+                              <Button fx:id="logout" layoutX="11.0" layoutY="504.0" mnemonicParsing="false" onAction="#logout" prefHeight="26.0" prefWidth="22.0" rotate="-90.0" scaleX="2.0" scaleY="2.0" style="-fx-background-color: none;" textFill="WHITE">
                                  <graphic>
                                     <SVGPath content="M8.416,3.943l1.12-1.12v9.031c0,0.257,0.208,0.464,0.464,0.464c0.256,0,0.464-0.207,0.464-0.464V2.823l1.12,1.12c0.182,0.182,0.476,0.182,0.656,0c0.182-0.181,0.182-0.475,0-0.656l-1.744-1.745c-0.018-0.081-0.048-0.16-0.112-0.224C10.279,1.214,10.137,1.177,10,1.194c-0.137-0.017-0.279,0.02-0.384,0.125C9.551,1.384,9.518,1.465,9.499,1.548L7.76,3.288c-0.182,0.181-0.182,0.475,0,0.656C7.941,4.125,8.234,4.125,8.416,3.943z M15.569,6.286h-2.32v0.928h2.32c0.512,0,0.928,0.416,0.928,0.928v8.817c0,0.513-0.416,0.929-0.928,0.929H4.432c-0.513,0-0.928-0.416-0.928-0.929V8.142c0-0.513,0.416-0.928,0.928-0.928h2.32V6.286h-2.32c-1.025,0-1.856,0.831-1.856,1.856v8.817c0,1.025,0.832,1.856,1.856,1.856h11.138c1.024,0,1.855-0.831,1.855-1.856V8.142C17.425,7.117,16.594,6.286,15.569,6.286z" fill="WHITE" />
                                  </graphic>
@@ -137,9 +107,9 @@
                   </AnchorPane>
                </left>
                <center>
-                  <AnchorPane prefHeight="593.0" prefWidth="706.0" BorderPane.alignment="CENTER">
+                  <AnchorPane prefHeight="503.0" prefWidth="580.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="home_form" layoutX="27.0" layoutY="51.0" prefHeight="541.0" prefWidth="667.0" style="-fx-background-color: white; -fx-background-radius: 20;">
+                        <AnchorPane fx:id="home_form" layoutX="27.0" layoutY="51.0" prefHeight="541.0" prefWidth="667.0" style="-fx-background-color: white; -fx-background-radius: 20;" visible="false">
                            <children>
                               <AnchorPane layoutX="30.0" layoutY="8.0" prefHeight="130.0" prefWidth="607.0" style="-fx-background-color: #dfdfdf; -fx-background-radius: 20;">
                                  <effect>
@@ -240,7 +210,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="addStudents_form" layoutX="-20.0" prefHeight="534.0" prefWidth="642.0" style="-fx-background-color: white; -fx-background-radius: 20;" translateX="67.0" translateY="61.0" visible="false">
+                        <AnchorPane fx:id="addStudents_form" layoutX="-20.0" prefHeight="534.0" prefWidth="642.0" style="-fx-background-color: white; -fx-background-radius: 20;" translateX="67.0" translateY="61.0">
                            <children>
                               <AnchorPane prefHeight="290.0" prefWidth="642.0" style="-fx-background-color: #dfdfdf; -fx-background-radius: 20;">
                                  <children>
@@ -250,7 +220,7 @@
                                        </rotationAxis>
                                     </SVGPath>
                                     <TextField fx:id="addStudents_search" layoutX="14.0" layoutY="10.0" prefHeight="30.0" prefWidth="179.0" promptText="Rechercher" />
-                                    <TableView fx:id="addStudents_TableView" layoutX="17.0" layoutY="54.0" prefHeight="225.0" prefWidth="610.0">
+                                    <TableView fx:id="addStudents_TableView" layoutX="17.0" layoutY="54.0" onMouseClicked="#addStudentsSelect" prefHeight="225.0" prefWidth="610.0">
                                       <columns>
                                         <TableColumn fx:id="addStudents_col_studentNum" prefWidth="75.0" text="ID Eleve" />
                                         <TableColumn fx:id="addStudents_col_year" prefWidth="75.0" text="Année" />
@@ -275,7 +245,7 @@
                                     <Font name="Bookman Old Style" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="addStudents_year" layoutX="93.0" layoutY="341.0" prefHeight="26.0" prefWidth="150.0" promptText="Choisissez" />
+                              <ComboBox fx:id="addStudents_year" layoutX="93.0" layoutY="341.0" onAction="#addStudentsYearList" prefHeight="26.0" prefWidth="150.0" promptText="Choisissez" />
                               <Label layoutX="29.0" layoutY="377.0" prefHeight="18.0" prefWidth="63.0" text="Cursus :">
                                  <font>
                                     <Font name="Bookman Old Style" size="14.0" />
@@ -299,7 +269,7 @@
                                     <Font name="Bookman Old Style" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="addStudents_gender" layoutX="326.0" layoutY="373.0" prefHeight="26.0" prefWidth="150.0" promptText="Choisissez" />
+                              <ComboBox fx:id="addStudents_gender" layoutX="326.0" layoutY="373.0" onAction="#addStudentsGenderList" prefHeight="26.0" prefWidth="150.0" promptText="Choisissez" />
                               <DatePicker fx:id="addStudents_birth" layoutX="158.0" layoutY="442.0" prefHeight="26.0" prefWidth="166.0" />
                               <Label alignment="CENTER_RIGHT" layoutX="12.0" layoutY="445.0" prefHeight="18.0" prefWidth="142.0" text="Date de Naissance :">
                                  <font>
@@ -449,6 +419,36 @@
                      </children>
                   </AnchorPane>
                </center>
+            </BorderPane>
+            <BorderPane prefHeight="50.0" prefWidth="900.0" scaleZ="50.0" style="-fx-background-color: #550000;">
+               <top>
+                  <AnchorPane prefHeight="50.0" prefWidth="933.0" scaleZ="50.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <SVGPath content="M 6 9 L 17 9 C 12 8 11 8 6 9 C 8 8 5 5 7 2 C 6.6667 3.3333 7 6 8 6 C 9 6 8.801 5.002 9 3 C 9.202 5.004 9 6 10 6 C 11.503 5.979 11 5 11.5 1 C 12 5 11.503 5.979 13 6 C 14 6 13.807 4.994 14 3 C 14.194 4.994 14 6 15 6 C 16 5 16.358 3.463 16 2 C 18 5 15 8 17 9" fill="WHITE" layoutX="30.0" layoutY="18.0" scaleX="5.0" scaleY="5.0" />
+                        <Label layoutY="23.0" text="Cr0wn Gestionnaire d'élèves" textFill="WHITE" translateX="68.0">
+                           <font>
+                              <Font name="Bookman Old Style" size="17.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="close" layoutX="858.0" layoutY="13.0" mnemonicParsing="false" onAction="#close" prefHeight="22.0" prefWidth="31.0" style="-fx-background-color: none;">
+                           <graphic>
+                              <SVGPath content="M10.185,1.417c-4.741,0-8.583,3.842-8.583,8.583c0,4.74,3.842,8.582,8.583,8.582S18.768,14.74,18.768,10C18.768,5.259,14.926,1.417,10.185,1.417 M10.185,17.68c-4.235,0-7.679-3.445-7.679-7.68c0-4.235,3.444-7.679,7.679-7.679S17.864,5.765,17.864,10C17.864,14.234,14.42,17.68,10.185,17.68 M10.824,10l2.842-2.844c0.178-0.176,0.178-0.46,0-0.637c-0.177-0.178-0.461-0.178-0.637,0l-2.844,2.841L7.341,6.52c-0.176-0.178-0.46-0.178-0.637,0c-0.178,0.176-0.178,0.461,0,0.637L9.546,10l-2.841,2.844c-0.178,0.176-0.178,0.461,0,0.637c0.178,0.178,0.459,0.178,0.637,0l2.844-2.841l2.844,2.841c0.178,0.178,0.459,0.178,0.637,0c0.178-0.176,0.178-0.461,0-0.637L10.824,10z" fill="WHITE" scaleX="2.0" scaleY="2.0" />
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                        <Button fx:id="minimize" layoutX="810.0" layoutY="13.0" mnemonicParsing="false" onAction="#minimize" prefHeight="26.0" prefWidth="26.0" style="-fx-background-color: none;" textFill="#ffffff00">
+                           <graphic>
+                              <SVGPath content="M14.776,10c0,0.239-0.195,0.434-0.435,0.434H5.658c-0.239,0-0.434-0.195-0.434-0.434s0.195-0.434,0.434-0.434h8.684C14.581,9.566,14.776,9.762,14.776,10 M18.25,10c0,4.558-3.693,8.25-8.25,8.25c-4.557,0-8.25-3.691-8.25-8.25c0-4.557,3.693-8.25,8.25-8.25C14.557,1.75,18.25,5.443,18.25,10 M17.382,10c0-4.071-3.312-7.381-7.382-7.381C5.929,2.619,2.619,5.93,2.619,10c0,4.07,3.311,7.382,7.381,7.382C14.07,17.383,17.382,14.07,17.382,10" fill="WHITE" scaleX="2.0" scaleY="2.0" />
+                           </graphic>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </top>
             </BorderPane>
          </children>
       </AnchorPane>

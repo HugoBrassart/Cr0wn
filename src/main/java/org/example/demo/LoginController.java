@@ -21,7 +21,6 @@ import java.util.Objects;
 public class LoginController {
     @FXML
     public Button loginButton;
-
     @FXML
     private Button closeButton;
     @FXML
@@ -30,6 +29,7 @@ private Label loginMessageLabel;
 private TextField usernameTextField;
     @FXML
     private PasswordField passwordPasswordField;
+
 
 
     public void loginButtonOnAction(javafx.event.ActionEvent actionEvent){
@@ -61,7 +61,7 @@ private TextField usernameTextField;
             while(queryResult.next()){
                 if (queryResult.getInt(1) == 1) {
                    // loginMessageLabel.setText("BONSOIR");
-                    createAccountForm();
+                    createDashboard();
                 }   else {
                     loginMessageLabel.setText("MAUVAIS LOGINS");
                     }
@@ -73,14 +73,14 @@ private TextField usernameTextField;
         }
     }
 
-    public void createAccountForm(){
+    public void createDashboard(){
         try{
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("register.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("dashboard.fxml")));
             Stage registerstage = new Stage();
             registerstage.initStyle(StageStyle.UNDECORATED);
-            registerstage.setScene(new Scene(root, 600, 400));
+            registerstage.setScene(new Scene(root, 900, 600));
             registerstage.show();
-
+            loginButton.getScene().getWindow().hide();
         } catch(Exception e){
             e.printStackTrace();
             e.getCause();
