@@ -60,7 +60,6 @@ private TextField usernameTextField;
 
             while(queryResult.next()){
                 if (queryResult.getInt(1) == 1) {
-                   // loginMessageLabel.setText("BONSOIR");
                     createDashboard();
                 }   else {
                     loginMessageLabel.setText("MAUVAIS LOGINS");

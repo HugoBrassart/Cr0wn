@@ -255,8 +255,7 @@ private Image image;
         try {
             studentData studentD;
 
-
-            preparedStatement = (PreparedStatement) connectDB.createStatement();
+            preparedStatement = connectDB.prepareStatement(sql);
             queryResult = preparedStatement.executeQuery();
 
             while (queryResult.next()) {
@@ -315,7 +314,7 @@ private Image image;
         image = new Image(uri, 124, 144, false, true);
         addStudents_imageView.setImage(image);
 
-        getData.path = studentD.getImage();
+
 
     }
     private String[] yearList = {"Première année", "Seconde année", "Licence"};

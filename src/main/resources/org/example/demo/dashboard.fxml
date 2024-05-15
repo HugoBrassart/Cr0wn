@@ -220,7 +220,7 @@
                                        </rotationAxis>
                                     </SVGPath>
                                     <TextField fx:id="addStudents_search" layoutX="14.0" layoutY="10.0" prefHeight="30.0" prefWidth="179.0" promptText="Rechercher" />
-                                    <TableView fx:id="addStudents_TableView" layoutX="17.0" layoutY="54.0" onMouseClicked="#addStudentsSelect" prefHeight="225.0" prefWidth="610.0">
+                                    <TableView fx:id="addStudents_tableView" layoutX="17.0" layoutY="54.0" onMouseClicked="#addStudentsSelect" prefHeight="225.0" prefWidth="610.0">
                                       <columns>
                                         <TableColumn fx:id="addStudents_col_studentNum" prefWidth="75.0" text="ID Eleve" />
                                         <TableColumn fx:id="addStudents_col_year" prefWidth="75.0" text="Année" />
@@ -281,7 +281,7 @@
                                     <Font name="Bookman Old Style" size="14.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="addStudents_status" layoutX="93.0" layoutY="407.0" prefHeight="26.0" prefWidth="150.0" promptText="Choisissez" />
+                              <ComboBox fx:id="addStudents_status" layoutX="93.0" layoutY="407.0" onAction="#addStudentsStatusList" prefHeight="26.0" prefWidth="150.0" promptText="Choisissez" />
                               <AnchorPane layoutX="483.0" layoutY="304.0" prefHeight="165.0" prefWidth="145.0" style="-fx-background-color: #dfdfdf;">
                                  <children>
                                     <Button fx:id="addStudents_insertBtn" layoutX="2.0" layoutY="125.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="142.0" text="insert?" />
