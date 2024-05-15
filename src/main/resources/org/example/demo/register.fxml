@@ -5,14 +5,13 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #161616;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo.RegisterController">
    <AnchorPane prefHeight="90.0" prefWidth="600.0" style="-fx-background-color: #550000;">
-      <Label layoutX="133.0" layoutY="30.0" prefHeight="60.0" prefWidth="214.0" text="Inscription" textFill="WHITE">
+      <Label layoutX="133.0" layoutY="14.0" prefHeight="76.0" prefWidth="214.0" text="Inscription" textFill="WHITE">
          <font>
             <Font name="Bookman Old Style" size="40.0" />
          </font>
@@ -20,11 +19,7 @@
             <DropShadow />
          </effect>
       </Label>
-      <ImageView fitHeight="60.0" fitWidth="82.0" layoutX="31.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../Images/cr0wn.png" />
-         </image>
-      </ImageView>
+      <SVGPath content="M 6 9 L 17 9 C 12 8 11 8 6 9 C 8 8 5 5 7 2 C 6.6667 3.3333 7 6 8 6 C 9 6 8.801 5.002 9 3 C 9.202 5.004 9 6 10 6 C 11.503 5.979 11 5 11.5 1 C 12 5 11.503 5.979 13 6 C 14 6 13.807 4.994 14 3 C 14.194 4.994 14 6 15 6 C 16 5 16.358 3.463 16 2 C 18 5 15 8 17 9" layoutX="58.0" layoutY="40.0" scaleX="9.0" scaleY="8.0" />
    </AnchorPane>
    <Label alignment="CENTER" layoutX="24.0" layoutY="142.0" text="Prenom" textFill="WHITE">
       <font>
@@ -56,12 +51,12 @@
          <Font name="Bookman Old Style" size="15.0" />
       </font>
    </Label>
-   <Button fx:id="registerButton" alignment="CENTER" layoutX="313.0" layoutY="291.0" mnemonicParsing="false" onAction="#registerButtonOnAction" prefHeight="34.0" prefWidth="97.0" style="-fx-background-color: #550000;" text="S'inscrire" textFill="WHITE">
+   <Button fx:id="registerButton" alignment="CENTER" layoutX="323.0" layoutY="285.0" mnemonicParsing="false" onAction="#registerButtonOnAction" prefHeight="34.0" prefWidth="222.0" style="-fx-background-color: #550000;" text="S'inscrire" textFill="WHITE">
       <font>
          <Font size="14.0" />
       </font>
    </Button>
-   <Button fx:id="closeButton" alignment="CENTER" layoutX="463.0" layoutY="291.0" mnemonicParsing="false" onAction="#closeButtonOnAction" prefHeight="34.0" prefWidth="97.0" style="-fx-background-color: #550000;" text="Retour" textFill="WHITE">
+   <Button fx:id="cancelButton" alignment="CENTER" layoutX="323.0" layoutY="333.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="34.0" prefWidth="222.0" style="-fx-background-color: #550000;" text="Revenir à la connexion" textFill="WHITE">
       <font>
          <Font size="14.0" />
       </font>

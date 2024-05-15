@@ -1,5 +1,6 @@
 package org.example.demo;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,8 +21,9 @@ import java.util.Objects;
 public class LoginController {
     @FXML
     public Button loginButton;
+
     @FXML
-    private Button cancelButton;
+    private Button closeButton;
     @FXML
 private Label loginMessageLabel;
     @FXML
@@ -40,9 +42,10 @@ private TextField usernameTextField;
  }
     }
 
-    public void cancelButtonOnAction(javafx.event.ActionEvent actionEvent) {
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
+    public void closeButtonOnAction(javafx.event.ActionEvent actionEvent){
+        Stage stage = (Stage)closeButton.getScene().getWindow();
         stage.close();
+        Platform.exit();
     }
 
     public void validateLogin(){

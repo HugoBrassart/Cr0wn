@@ -19,8 +19,8 @@ import java.sql.Statement;
 
 public class RegisterController {
 
-    @FXML
-    private Button closeButton;
+@FXML
+private Button cancelButton;
 @FXML
 private Label registrationMessageLabel;
 @FXML
@@ -47,12 +47,11 @@ private TextField usernameTextField;
         }
 
 }
-
-    public void closeButtonOnAction(javafx.event.ActionEvent actionEvent){
-        Stage stage = (Stage)closeButton.getScene().getWindow();
+    public void cancelButtonOnAction(javafx.event.ActionEvent actionEvent) {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
-        Platform.exit();
     }
+
     public void registerUser(){
     DatabaseConnection connectNow = new DatabaseConnection();
         try (Connection connectDB = connectNow.getConnection();

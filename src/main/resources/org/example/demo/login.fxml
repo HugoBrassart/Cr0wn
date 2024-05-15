@@ -12,12 +12,11 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.demo.LoginController">
    <left>
       <AnchorPane prefHeight="407.0" prefWidth="228.0" style="-fx-background-color: #550000;" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" layoutX="12.0" layoutY="101.0" prefHeight="56.0" prefWidth="216.0" style="-fx-font-style: white;" text="Projet 2" textFill="#f2e4e4">
+            <Label alignment="CENTER" layoutX="12.0" layoutY="101.0" prefHeight="56.0" prefWidth="216.0" style="-fx-font-style: white;" text="Cr0wn" textFill="#f2e4e4">
                <font>
                   <Font name="Bookman Old Style" size="36.0" />
                </font>
@@ -25,9 +24,9 @@
                   <DropShadow />
                </effect>
             </Label>
-            <Label alignment="CENTER" layoutX="19.0" layoutY="244.0" prefHeight="56.0" prefWidth="202.0" style="-fx-font-style: white;" text="Pa2nom" textFill="WHITE">
+            <Label alignment="CENTER" layoutX="13.0" layoutY="177.0" prefHeight="94.0" prefWidth="202.0" style="-fx-font-style: white;" text="Gestionnaire d'élèves" textFill="WHITE" wrapText="true">
                <font>
-                  <Font name="Bookman Old Style" size="45.0" />
+                  <Font name="Bookman Old Style" size="31.0" />
                </font>
                <effect>
                   <DropShadow>
@@ -56,7 +55,7 @@
          <children>
             <Label alignment="CENTER" layoutX="4.0" layoutY="38.0" prefHeight="38.0" prefWidth="364.0" text="Se Connecter" textFill="WHITE">
                <font>
-                  <Font name="Bookman Old Style" size="26.0" />
+                  <Font name="Bookman Old Style" size="42.0" />
                </font>
             </Label>
             <Label layoutX="40.0" layoutY="155.0" text="Utilisateur" textFill="WHITE">
@@ -71,21 +70,26 @@
             </Label>
             <TextField fx:id="usernameTextField" layoutX="156.0" layoutY="152.0" prefHeight="26.0" prefWidth="184.0" promptText="Username" />
             <PasswordField fx:id="passwordPasswordField" layoutX="156.0" layoutY="194.0" prefHeight="26.0" prefWidth="184.0" promptText="Password" />
-            <Button fx:id="loginButton" layoutX="68.0" layoutY="261.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="33.0" prefWidth="234.0" style="-fx-background-color: #550000;" text="CONNEXION" textFill="WHITE">
+            <Button fx:id="loginButton" layoutX="64.0" layoutY="256.0" mnemonicParsing="false" onAction="#loginButtonOnAction" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #550000;" text="CONNEXION" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button fx:id="cancelButton" layoutX="68.0" layoutY="315.0" mnemonicParsing="false" onAction="#cancelButtonOnAction" prefHeight="33.0" prefWidth="234.0" style="-fx-background-color: #550000;" text="RETOUR" textFill="WHITE">
+            <Button fx:id="closeButton" layoutX="66.0" layoutY="303.0" mnemonicParsing="false" onAction="#closeButtonOnAction" prefHeight="35.0" prefWidth="230.0" style="-fx-background-color: #550000;" text="QUITTER" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
             </Button>
-            <Label fx:id="loginMessageLabel" alignment="CENTER" layoutX="31.0" layoutY="84.0" prefHeight="50.0" prefWidth="318.0" textFill="#df0707" wrapText="true">
+            <Label fx:id="loginMessageLabel" alignment="CENTER" layoutX="31.0" layoutY="84.0" prefHeight="46.0" prefWidth="318.0" textFill="#df0707" wrapText="true">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
+            <Button fx:id="registerButton" layoutX="188.0" layoutY="256.0" mnemonicParsing="false" onAction="#createAccountForm" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: #550000;" text="S'INSCRIRE" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </right>
