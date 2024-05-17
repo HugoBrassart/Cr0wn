@@ -2,6 +2,8 @@ package org.example.demo;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,9 +17,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +38,6 @@ public class DashboardController implements Initializable {
     private Statement statement;
     private ResultSet queryResult;
 
-    private Image image;
 
     @FXML
     private Button addStudents_addBtn;
@@ -311,14 +314,280 @@ public class DashboardController implements Initializable {
 
         String uri = "file:" + studentD.getImage();
 
-        image = new Image(uri, 124, 144, false, true);
+        image = new Image(uri, 144,124 , false, true);
         addStudents_imageView.setImage(image);
 
-
+getData.path = studentD.getImage();
 
     }
-    private String[] yearList = {"Première année", "Seconde année", "Licence"};
 
+    public void addStudentsUpdate() {
+
+
+
+        String updateData = "UPDATE student SET "
+                + "year = '" + addStudents_year.getSelectionModel().getSelectedItem()
+                + "', course = '" + addStudents_course.getSelectionModel().getSelectedItem()
+                + "', firstName = '" + addStudents_firstName.getText()
+                + "', lastName = '" + addStudents_lastName.getText()
+                + "', gender = '" + addStudents_gender.getSelectionModel().getSelectedItem()
+                + "', birth = '" + addStudents_birth.getValue()
+                + "', status = '" + addStudents_status.getSelectionModel().getSelectedItem()
+                + "', image = '"  + "' WHERE studentNum = '"
+                + addStudents_studentNum.getText() + "'";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB =connectNow.getConnection();
+
+        try {
+            Alert alert;
+            if (addStudents_studentNum.getText().isEmpty()
+                    || addStudents_year.getSelectionModel().getSelectedItem() == null
+                    || addStudents_course.getSelectionModel().getSelectedItem() == null
+                    || addStudents_firstName.getText().isEmpty()
+                    || addStudents_lastName.getText().isEmpty()
+                    || addStudents_gender.getSelectionModel().getSelectedItem() == null
+                    || addStudents_birth.getValue() == null
+                    || addStudents_status.getSelectionModel().getSelectedItem() == null
+                    || getData.path == null || getData.path == "") {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous devez remplir tous les champs vides");
+                alert.showAndWait();
+            } else {
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous voulez vraiment modifier l'élève n°" + addStudents_studentNum.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connectDB.createStatement();
+                    statement.executeUpdate(updateData);
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Modification réussie");
+                    alert.showAndWait();
+
+                    addStudentsShowListData();
+                    addStudentsClear();
+
+                } else {
+                    return;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addStudentsDelete() {
+
+        String deleteData = "DELETE FROM student WHERE studentNum = '"
+                + addStudents_studentNum.getText() + "'";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB =connectNow.getConnection();
+
+        try {
+            Alert alert;
+            if (addStudents_studentNum.getText().isEmpty()
+                    || addStudents_year.getSelectionModel().getSelectedItem() == null
+                    || addStudents_course.getSelectionModel().getSelectedItem() == null
+                    || addStudents_firstName.getText().isEmpty()
+                    || addStudents_lastName.getText().isEmpty()
+                    || addStudents_gender.getSelectionModel().getSelectedItem() == null
+                    || addStudents_birth.getValue() == null
+                    || addStudents_status.getSelectionModel().getSelectedItem() == null
+                    || getData.path == null || getData.path == "") {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous devez remplir tous les champs vides");
+                alert.showAndWait();
+            } else {
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous voulez supprimer l'élève n°" + addStudents_studentNum.getText() + "?");
+            }
+                Optional<ButtonType>option = alert.showAndWait();
+
+            if (option.get().equals(ButtonType.OK)) {
+                statement = connectDB.createStatement();
+                statement.executeUpdate(deleteData);
+
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information Message");
+                alert.setHeaderText(null);
+                alert.setContentText("L'élève a bien été supprimé");
+                alert.showAndWait();
+
+                addStudentsShowListData();
+                addStudentsClear();
+            }else return;
+
+
+        }catch (Exception e){
+           e.printStackTrace();
+        }
+
+    }
+
+    public void addStudentsClear() {
+        addStudents_studentNum.setText("");
+        addStudents_year.getSelectionModel().clearSelection();
+        addStudents_course.getSelectionModel().clearSelection();
+        addStudents_firstName.setText("");
+        addStudents_lastName.setText("");
+        addStudents_gender.getSelectionModel().clearSelection();
+        addStudents_birth.setValue(null);
+        addStudents_status.getSelectionModel().clearSelection();
+        addStudents_imageView.setImage(null);
+
+        getData.path = "";
+    }
+
+    private Image image;
+    public void addStudentsInsertImage() {
+
+        FileChooser open = new FileChooser();
+        open.setTitle("Open Image File");
+        open.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image File", "*jpg", "*png"));
+
+        File file = open.showOpenDialog(main_form.getScene().getWindow());
+
+        if (file != null) {
+
+            image = new Image(file.toURI().toString(), 144, 124, false, true);
+            addStudents_imageView.setImage(image);
+
+            getData.path = file.getAbsolutePath();
+
+        }
+    }
+
+    public void addStudentsAdd() {
+
+        String insertData = "INSERT INTO student "
+                + "(studentNum,year,course,firstName,lastName,gender,birth,status,image,date) "
+                + "VALUES(?,?,?,?,?,?,?,?,?,?)";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB =connectNow.getConnection();
+
+        try {
+            Alert alert;
+
+            if (addStudents_studentNum.getText().isEmpty()
+                    || addStudents_year.getSelectionModel().getSelectedItem() == null
+                    || addStudents_course.getSelectionModel().getSelectedItem() == null
+                    || addStudents_firstName.getText().isEmpty()
+                    || addStudents_lastName.getText().isEmpty()
+                    || addStudents_gender.getSelectionModel().getSelectedItem() == null
+                    || addStudents_birth.getValue() == null
+                    || addStudents_status.getSelectionModel().getSelectedItem() == null
+                    || getData.path == null || getData.path == "") {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous devez remplir tous les champs vides");
+                alert.showAndWait();
+            } else {
+                String checkData = "SELECT studentNum FROM student WHERE studentNum = '"
+                        + addStudents_studentNum.getText() + "'";
+
+                statement = connectDB.createStatement();
+                queryResult = statement.executeQuery(checkData);
+
+                if (queryResult.next()) {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Le numéro d'élève " + addStudents_studentNum.getText() + "existe déjà");
+                    alert.showAndWait();
+                } else {
+                    preparedStatement = connectDB.prepareStatement(insertData);
+                    preparedStatement.setString(1, addStudents_studentNum.getText());
+                    preparedStatement.setString(2, (String) addStudents_year.getSelectionModel().getSelectedItem());
+                    preparedStatement.setString(3, (String) addStudents_course.getSelectionModel().getSelectedItem());
+                    preparedStatement.setString(4, addStudents_firstName.getText());
+                    preparedStatement.setString(5, addStudents_lastName.getText());
+                    preparedStatement.setString(6, (String) addStudents_gender.getSelectionModel().getSelectedItem());
+                    preparedStatement.setString(7, String.valueOf(addStudents_birth.getValue()));
+                    preparedStatement.setString(8, (String) addStudents_status.getSelectionModel().getSelectedItem());
+
+                    String uri = getData.path;
+                    uri = uri.replace("\\", "\\\\");
+                    preparedStatement.setString(9, uri);
+
+                Date date = new Date();
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                preparedStatement.setString(10, String.valueOf(sqlDate));
+
+                preparedStatement.executeUpdate();
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("L'élève a bien été ajouté");
+                    alert.showAndWait();
+
+                    addStudentsShowListData();
+                    addStudentsClear();
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void addStudentsSearch() {
+
+        FilteredList<studentData> filter = new FilteredList<>(addStudentsListD, e -> true);
+
+        addStudents_search.textProperty().addListener((Observable, oldValue, newValue) -> {
+
+            filter.setPredicate(predicateStudentData -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String searchKey = newValue.toLowerCase();
+
+                if (predicateStudentData.getStudentNum().toString().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getYear().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getCourse().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getFirstName().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getLastName().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getGender().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getBirth().toString().contains(searchKey)) {
+                    return true;
+                } else return predicateStudentData.getStatus().toLowerCase().contains(searchKey);
+            });
+        });
+
+        SortedList<studentData> sortList = new SortedList<>(filter);
+        sortList.comparatorProperty().bind(addStudents_tableView.comparatorProperty());
+        addStudents_tableView.setItems(sortList);
+
+    }
+
+    private String[] yearList = {"Première année", "Seconde année", "Licence"};
     public void addStudentsYearList() {
 
         List<String> yearL = new ArrayList<>();
@@ -329,6 +598,31 @@ public class DashboardController implements Initializable {
 
         ObservableList ObList = FXCollections.observableArrayList(yearL);
         addStudents_year.setItems(ObList);
+
+    }
+
+    public void addStudentsCourseList() {
+
+        String listCourse = "SELECT * FROM course";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB = connectNow.getConnection();
+
+        try {
+
+            ObservableList listC = FXCollections.observableArrayList();
+
+            preparedStatement = connectDB.prepareStatement(listCourse);
+            queryResult = preparedStatement.executeQuery();
+
+            while (queryResult.next()) {
+                listC.add(queryResult.getString("course"));
+            }
+            addStudents_course.setItems(listC);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -472,7 +766,7 @@ public class DashboardController implements Initializable {
 
         String deleteData = "DELETE FROM course WHERE course = '"
                 + availableCourse_course.getText() + "'";
-        
+
         DatabaseConnection connectNow = new DatabaseConnection();
         connectDB = connectNow.getConnection();
 
@@ -636,6 +930,8 @@ public class DashboardController implements Initializable {
             addStudentsYearList();
             addStudentsGenderList();
             addStudentsStatusList();
+            addStudentsCourseList();
+            addStudentsSearch();
 
 
         } else if (event.getSource() == availableCourse_btn) {
@@ -672,6 +968,7 @@ public class DashboardController implements Initializable {
         addStudentsYearList();
         addStudentsGenderList();
         addStudentsStatusList();
+        addStudentsCourseList();
 
         availableCourseShowListData();
     }
