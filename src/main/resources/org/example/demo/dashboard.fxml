@@ -109,7 +109,7 @@
                <center>
                   <AnchorPane prefHeight="503.0" prefWidth="580.0" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="home_form" layoutX="27.0" layoutY="51.0" prefHeight="541.0" prefWidth="667.0" style="-fx-background-color: white; -fx-background-radius: 20;" visible="false">
+                        <AnchorPane fx:id="home_form" layoutX="27.0" layoutY="51.0" prefHeight="541.0" prefWidth="667.0" style="-fx-background-color: white; -fx-background-radius: 20;">
                            <children>
                               <AnchorPane layoutX="30.0" layoutY="8.0" prefHeight="130.0" prefWidth="607.0" style="-fx-background-color: #dfdfdf; -fx-background-radius: 20;">
                                  <effect>
@@ -134,7 +134,7 @@
                                     <AnchorPane layoutX="218.0" layoutY="17.0" prefHeight="106.0" prefWidth="176.0" style="-fx-background-color: #550000;">
                                        <children>
                                           <SVGPath content="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-.5 12.25V12h1v3.25a.75.75 0 0 0 1.5 0V12h1l-1-5v-.215a.285.285 0 0 1 .56-.078l.793 2.777a.711.711 0 1 0 1.364-.405l-1.065-3.461A3 3 0 0 0 8.784 3.5H7.216a3 3 0 0 0-2.868 2.118L3.283 9.079a.711.711 0 1 0 1.365.405l.793-2.777a.285.285 0 0 1 .56.078V7l-1 5h1v3.25a.75.75 0 0 0 1.5 0Z" fill="WHITE" layoutX="25.0" layoutY="45.0" scaleX="4.0" scaleY="4.0" />
-                                          <Label layoutX="75.0" layoutY="62.0" prefHeight="38.0" prefWidth="85.0" text="Total Filles" textFill="WHITE" wrapText="true">
+                                          <Label layoutX="75.0" layoutY="62.0" prefHeight="38.0" prefWidth="85.0" text="Total Filles acceptées" textFill="WHITE" wrapText="true">
                                              <font>
                                                 <Font name="Bookman Old Style" size="15.0" />
                                              </font>
@@ -149,7 +149,7 @@
                                     <AnchorPane layoutX="421.0" layoutY="17.0" prefHeight="106.0" prefWidth="176.0" style="-fx-background-color: #550000;">
                                        <children>
                                           <SVGPath content="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M6 6.75v8.5a.75.75 0 0 0 1.5 0V10.5a.5.5 0 0 1 1 0v4.75a.75.75 0 0 0 1.5 0v-8.5a.25.25 0 1 1 .5 0v2.5a.75.75 0 0 0 1.5 0V6.5a3 3 0 0 0-3-3H7a3 3 0 0 0-3 3v2.75a.75.75 0 0 0 1.5 0v-2.5a.25.25 0 0 1 .5 0" fill="WHITE" layoutX="22.0" layoutY="45.0" scaleX="4.0" scaleY="4.0" />
-                                          <Label layoutX="55.0" layoutY="60.0" prefHeight="38.0" prefWidth="103.0" text="Total Garçons" textFill="WHITE" wrapText="true">
+                                          <Label layoutX="55.0" layoutY="60.0" prefHeight="38.0" prefWidth="103.0" text="Total Garçons acceptés" textFill="WHITE" wrapText="true">
                                              <font>
                                                 <Font name="Bookman Old Style" size="15.0" />
                                              </font>
@@ -210,7 +210,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="addStudents_form" layoutX="-20.0" prefHeight="534.0" prefWidth="642.0" style="-fx-background-color: white; -fx-background-radius: 20;" translateX="67.0" translateY="61.0">
+                        <AnchorPane fx:id="addStudents_form" layoutX="-20.0" prefHeight="534.0" prefWidth="642.0" style="-fx-background-color: white; -fx-background-radius: 20;" translateX="67.0" translateY="61.0" visible="false">
                            <children>
                               <AnchorPane prefHeight="290.0" prefWidth="642.0" style="-fx-background-color: #dfdfdf; -fx-background-radius: 20;">
                                  <children>
@@ -335,12 +335,12 @@
                                           <Font name="Bookman Old Style" size="15.0" />
                                        </font>
                                     </Label>
-                                    <Button fx:id="studentGrade_updateBtn" layoutX="130.0" layoutY="246.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="78.0" text="Modifier">
+                                    <Button fx:id="studentGrade_updateBtn" layoutX="130.0" layoutY="246.0" mnemonicParsing="false" onAction="#studentGradesUpdate" prefHeight="42.0" prefWidth="78.0" text="Modifier">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
                                     </Button>
-                                    <Button fx:id="studentGrade_clearBtn" layoutX="14.0" layoutY="246.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="78.0" text="Zero">
+                                    <Button fx:id="studentGrade_clearBtn" layoutX="14.0" layoutY="246.0" mnemonicParsing="false" onAction="#studentGradesClear" prefHeight="42.0" prefWidth="78.0" text="Zero">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -354,7 +354,7 @@
                                     <DropShadow />
                                  </effect>
                                  <children>
-                                    <TableView fx:id="studentGrade_tableView" layoutX="9.0" layoutY="46.0" prefHeight="465.0" prefWidth="391.0">
+                                    <TableView fx:id="studentGrade_tableView" layoutX="9.0" layoutY="46.0" onMouseClicked="#studentGradesSelect" prefHeight="465.0" prefWidth="391.0">
                                       <columns>
                                         <TableColumn fx:id="studentGrade_col_studentNum" prefWidth="63.199981689453125" text="ID Eleve" />
                                           <TableColumn fx:id="studentGrade_col_year" prefWidth="68.00006103515625" text="Année" />
@@ -364,7 +364,7 @@
                                           <TableColumn fx:id="studentGrade_col_final" minWidth="0.0" prefWidth="74.39995117187499" text="Moyenne" />
                                       </columns>
                                     </TableView>
-                                    <TextField fx:id="studentGrade_search" layoutX="9.0" layoutY="14.0" prefHeight="26.0" prefWidth="186.0" promptText="Rechercher" />
+                                    <TextField fx:id="studentGrade_search" layoutX="9.0" layoutY="14.0" onAction="#studentGradesSearch" onKeyTyped="#studentGradesSearch" prefHeight="26.0" prefWidth="186.0" promptText="Rechercher" />
                                  </children>
                               </AnchorPane>
                            </children>

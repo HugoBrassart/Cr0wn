@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -199,22 +200,22 @@ public class DashboardController implements Initializable {
     private Button studentGrade_clearBtn;
 
     @FXML
-    private TableColumn<?, ?> studentGrade_col_course;
+    private TableColumn<studentData, String> studentGrade_col_course;
 
     @FXML
-    private TableColumn<?, ?> studentGrade_col_final;
+    private TableColumn<studentData, String> studentGrade_col_final;
 
     @FXML
-    private TableColumn<?, ?> studentGrade_col_firstSem;
+    private TableColumn<studentData, String> studentGrade_col_firstSem;
 
     @FXML
-    private TableColumn<?, ?> studentGrade_col_secondSem;
+    private TableColumn<studentData, String> studentGrade_col_secondSem;
 
     @FXML
-    private TableColumn<?, ?> studentGrade_col_studentNum;
+    private TableColumn<studentData, String> studentGrade_col_studentNum;
 
     @FXML
-    private TableColumn<?, ?> studentGrade_col_year;
+    private TableColumn<studentData, String> studentGrade_col_year;
 
     @FXML
     private Label studentGrade_course;
@@ -235,7 +236,7 @@ public class DashboardController implements Initializable {
     private TextField studentGrade_studentNum;
 
     @FXML
-    private TableView<?> studentGrade_tableView;
+    private TableView<studentData> studentGrade_tableView;
 
     @FXML
     private Button studentGrade_updateBtn;
@@ -245,6 +246,161 @@ public class DashboardController implements Initializable {
 
     @FXML
     private Label username;
+
+    public void homeDisplayTotalEnrolledStudents() {
+
+        String sql = "SELECT COUNT(idstudent) FROM student";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB =connectNow.getConnection();
+
+        int countEnrolled = 0;
+
+        try {
+            preparedStatement = connectDB.prepareStatement(sql);
+            queryResult = preparedStatement.executeQuery();
+
+            if (queryResult.next()) {
+                countEnrolled = queryResult.getInt("COUNT(idstudent)");
+            }
+
+            home_totalEnrolled.setText(String.valueOf(countEnrolled));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void homeDisplayFemaleEnrolled() {
+
+        String sql = "SELECT COUNT(idstudent) FROM student WHERE gender = 'Féminin' and status = 'Accepté'";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB =connectNow.getConnection();
+
+        try {
+            int countFemale = 0;
+
+            preparedStatement = connectDB.prepareStatement(sql);
+            queryResult = preparedStatement.executeQuery();
+
+            if (queryResult.next()) {
+                countFemale = queryResult.getInt("COUNT(idstudent)");
+            }
+
+            home_totalFemale.setText(String.valueOf(countFemale));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void homeDisplayMaleEnrolled() {
+
+        String sql = "SELECT COUNT(idstudent) FROM student WHERE gender = 'Masculin' and status = 'Accepté'";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB =connectNow.getConnection();
+
+        try {
+            int countMale = 0;
+
+            preparedStatement = connectDB.prepareStatement(sql);
+            queryResult = preparedStatement.executeQuery();
+
+            if (queryResult.next()) {
+                countMale = queryResult.getInt("COUNT(idstudent)");
+            }
+            home_totalMale.setText(String.valueOf(countMale));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void homeDisplayTotalEnrolledChart() {
+
+        home_totalEnrolledChart.getData().clear();
+
+        String sql = "SELECT date, COUNT(idstudent) FROM student WHERE status = 'Accepté' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB =connectNow.getConnection();
+
+        try {
+            XYChart.Series chart = new XYChart.Series();
+
+            preparedStatement = connectDB.prepareStatement(sql);
+            queryResult = preparedStatement.executeQuery();
+
+            while (queryResult.next()) {
+                chart.getData().add(new XYChart.Data(queryResult.getString(1), queryResult.getInt(2)));
+            }
+
+            home_totalEnrolledChart.getData().add(chart);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void homeDisplayFemaleEnrolledChart() {
+
+        home_totalFemaleChart.getData().clear();
+
+        String sql = "SELECT date, COUNT(idstudent) FROM student WHERE status = 'Accepté' and gender = 'Féminin' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB =connectNow.getConnection();
+
+        try {
+            XYChart.Series chart = new XYChart.Series();
+
+            preparedStatement = connectDB.prepareStatement(sql);
+            queryResult = preparedStatement.executeQuery();
+
+            while (queryResult.next()) {
+                chart.getData().add(new XYChart.Data(queryResult.getString(1), queryResult.getInt(2)));
+            }
+
+            home_totalFemaleChart.getData().add(chart);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void homeDisplayEnrolledMaleChart() {
+
+        home_totalMaleChart.getData().clear();
+
+        String sql = "SELECT date, COUNT(idstudent) FROM student WHERE status = 'Accepté' and gender = 'Masculin' GROUP BY date ORDER BY TIMESTAMP(date) ASC LIMIT 5";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB =connectNow.getConnection();
+
+        try {
+            XYChart.Series chart = new XYChart.Series();
+
+            preparedStatement = connectDB.prepareStatement(sql);
+            queryResult = preparedStatement.executeQuery();
+
+            while (queryResult.next()) {
+                chart.getData().add(new XYChart.Data(queryResult.getString(1), queryResult.getInt(2)));
+            }
+
+            home_totalMaleChart.getData().add(chart);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public ObservableList<studentData> addStudentsListData() {
 
@@ -421,6 +577,22 @@ getData.path = studentD.getImage();
                 statement = connectDB.createStatement();
                 statement.executeUpdate(deleteData);
 
+                String checkData = "SELECT studentNum FROM student_grade "
+                        + "WHERE studentNum = '" + addStudents_studentNum.getText() + "'";
+
+                preparedStatement = connectDB.prepareStatement(checkData);
+                queryResult = preparedStatement.executeQuery();
+
+                if (queryResult.next()) {
+                    String deleteGrade = "DELETE FROM student_grade WHERE "
+                            + "studentNum = '" + addStudents_studentNum.getText() + "'";
+
+                    statement = connectDB.createStatement();
+                    statement.executeUpdate(deleteGrade);
+
+                }
+
+
                 alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information Message");
                 alert.setHeaderText(null);
@@ -530,6 +702,19 @@ getData.path = studentD.getImage();
                 preparedStatement.setString(10, String.valueOf(sqlDate));
 
                 preparedStatement.executeUpdate();
+
+                    String insertStudentGrade = "INSERT INTO student_grade "
+                            + "(studentNum,year,course,first_sem,second_sem,final) "
+                            + "VALUES(?,?,?,?,?,?)";
+                    preparedStatement = connectDB.prepareStatement(insertStudentGrade);
+                    preparedStatement.setString(1, addStudents_studentNum.getText());
+                    preparedStatement.setString(2, (String) addStudents_year.getSelectionModel().getSelectedItem());
+                    preparedStatement.setString(3, (String) addStudents_course.getSelectionModel().getSelectedItem());
+                    preparedStatement.setString(4, "0");
+                    preparedStatement.setString(5, "0");
+                    preparedStatement.setString(6, "0");
+
+                    preparedStatement.executeUpdate();
 
                     alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Information Message");
@@ -875,6 +1060,187 @@ getData.path = studentD.getImage();
 
     }
 
+    public void studentGradesUpdate() {
+        double finalCheck1 = 0;
+        double finalCheck2 = 0;
+
+        String checkData = "SELECT * FROM student_grade WHERE studentNum = '"
+                + studentGrade_studentNum.getText() + "'";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB = connectNow.getConnection();
+
+        double finalResult;
+
+        try {
+
+            preparedStatement = connectDB.prepareStatement(checkData);
+            queryResult = preparedStatement.executeQuery();
+
+            if (queryResult.next()) {
+                finalCheck1 = queryResult.getDouble("first_sem");
+                finalCheck2 = queryResult.getDouble("second_sem");
+            }
+
+            if (finalCheck1 == 0 || finalCheck2 == 0) {
+                finalResult = 0;
+            } else {
+                finalResult = (Double.parseDouble(studentGrade_firstSem.getText())
+                        + Double.parseDouble(studentGrade_secondSem.getText()) / 2);
+            }
+
+            String updateData = "UPDATE student_grade SET "
+                    + " year = '" + studentGrade_year.getText()
+                    + "', course = '" + studentGrade_course.getText()
+                    + "', first_sem = '" + studentGrade_firstSem.getText()
+                    + "', second_sem = '" + studentGrade_secondSem.getText()
+                    + "', final = '" + finalResult + "' WHERE studentNum = '"
+                    + studentGrade_studentNum.getText() + "'";
+
+            Alert alert;
+
+            if (studentGrade_studentNum.getText().isEmpty()
+                    || studentGrade_year.getText().isEmpty()
+                    || studentGrade_course.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous devez remplir tous les champs vides");
+                alert.showAndWait();
+
+            } else {
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous voulez modifier les notes de l'élève n°" + studentGrade_studentNum.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connectDB.createStatement();
+                    statement.executeUpdate(updateData);
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Modification réussie");
+                    alert.showAndWait();
+
+                    studentGradesShowListData();
+                    studentGradesClear();
+                } else {
+                    return;
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void studentGradesClear() {
+        studentGrade_studentNum.setText("");
+        studentGrade_year.setText("");
+        studentGrade_course.setText("");
+        studentGrade_firstSem.setText("");
+        studentGrade_secondSem.setText("");
+    }
+
+    public ObservableList<studentData> studentGradesListData() {
+
+        ObservableList<studentData> listData = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM student_grade";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB =connectNow.getConnection();
+
+        try {
+            studentData studentD;
+
+            preparedStatement = connectDB.prepareStatement(sql);
+            queryResult = preparedStatement.executeQuery();
+
+            while (queryResult.next()) {
+                studentD = new studentData(queryResult.getInt("studentNum"),
+                        queryResult.getString("year"),
+                       queryResult.getString("course"),
+                       queryResult.getDouble("first_sem"),
+                       queryResult.getDouble("second_sem"),
+                        queryResult.getDouble("final"));
+
+                listData.add(studentD);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
+    private ObservableList<studentData> studentGradesList;
+    public void studentGradesShowListData() {
+        studentGradesList = studentGradesListData();
+
+        studentGrade_col_studentNum.setCellValueFactory(new PropertyValueFactory<>("studentNum"));
+        studentGrade_col_year.setCellValueFactory(new PropertyValueFactory<>("year"));
+        studentGrade_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
+        studentGrade_col_firstSem.setCellValueFactory(new PropertyValueFactory<>("firstSem"));
+        studentGrade_col_secondSem.setCellValueFactory(new PropertyValueFactory<>("secondSem"));
+        studentGrade_col_final.setCellValueFactory(new PropertyValueFactory<>("finals"));
+        studentGrade_tableView.setItems(studentGradesList);
+
+    }
+
+    public void studentGradesSelect() {
+
+        studentData studentD = studentGrade_tableView.getSelectionModel().getSelectedItem();
+        int num = studentGrade_tableView.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        studentGrade_studentNum.setText(String.valueOf(studentD.getStudentNum()));
+        studentGrade_year.setText(studentD.getYear());
+        studentGrade_course.setText(studentD.getCourse());
+        studentGrade_firstSem.setText(String.valueOf(studentD.getFirstSem()));
+        studentGrade_secondSem.setText(String.valueOf(studentD.getSecondSem()));
+    }
+    public void studentGradesSearch() {
+
+        FilteredList<studentData> filter = new FilteredList<>(studentGradesList, e -> true);
+
+        studentGrade_search.textProperty().addListener((Observable, oldValue, newValue) -> {
+
+            filter.setPredicate(predicateStudentData -> {
+
+                if (newValue.isEmpty() || newValue == null) {
+                    return true;
+                }
+                String searchKey = newValue.toLowerCase();
+
+                if (predicateStudentData.getStudentNum().toString().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getYear().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getCourse().toLowerCase().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getFirstSem().toString().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getSecondSem().toString().contains(searchKey)) {
+                    return true;
+                } else if (predicateStudentData.getFinals().toString().contains(searchKey)) {
+                    return true;
+                } else return false;
+
+            });
+        });
+
+        SortedList<studentData> sortList = new SortedList<>(filter);
+
+        sortList.comparatorProperty().bind(studentGrade_tableView.comparatorProperty());
+        studentGrade_tableView.setItems(sortList);
+
+    }
+
     public void logout() {
 
         try {
@@ -917,8 +1283,12 @@ getData.path = studentD.getImage();
             availableCourse_form.setVisible(false);
             studentGrade_form.setVisible(false);
 
-
-
+            homeDisplayTotalEnrolledStudents();
+            homeDisplayMaleEnrolled();
+            homeDisplayFemaleEnrolled();
+            homeDisplayEnrolledMaleChart();
+            homeDisplayFemaleEnrolledChart();
+            homeDisplayTotalEnrolledChart();
 
         } else if (event.getSource() == addStudents_btn) {
             home_form.setVisible(false);
@@ -948,7 +1318,8 @@ getData.path = studentD.getImage();
             availableCourse_form.setVisible(false);
             studentGrade_form.setVisible(true);
 
-
+            studentGradesSearch();
+            studentGradesShowListData();
         }
     }
 
@@ -960,10 +1331,24 @@ getData.path = studentD.getImage();
         stage.setIconified(true);
     }
 
+    public void displayUsername(){
+        username.setText(getData.username);
+    }
+
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
+        displayUsername();
+
+
+        homeDisplayTotalEnrolledStudents();
+        homeDisplayMaleEnrolled();
+        homeDisplayFemaleEnrolled();
+        homeDisplayEnrolledMaleChart();
+        homeDisplayFemaleEnrolledChart();
+        homeDisplayTotalEnrolledChart();
+
         addStudentsShowListData();
         addStudentsYearList();
         addStudentsGenderList();
@@ -971,6 +1356,8 @@ getData.path = studentD.getImage();
         addStudentsCourseList();
 
         availableCourseShowListData();
+
+        studentGradesShowListData();
     }
 
 

@@ -81,6 +81,7 @@ private TextField usernameTextField;
             registerstage.initStyle(StageStyle.UNDECORATED);
             registerstage.setScene(new Scene(root, 900, 600));
             registerstage.show();
+            getData.username=usernameTextField.getText();
             loginButton.getScene().getWindow().hide();
         } catch(Exception e){
             e.printStackTrace();
