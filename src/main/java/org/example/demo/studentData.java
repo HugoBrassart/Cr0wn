@@ -3,6 +3,7 @@ package org.example.demo;
 import java.sql.Date;
 
 public class studentData {
+
     private Integer studentNum;
     private String year;
     private String course;
@@ -16,6 +17,7 @@ public class studentData {
     private Double secondSem;
     private Double finals;
 
+    // MAKE SURE THAT SAME DATATYPE THAT YOU WILL PUT THERE
     public studentData(Integer studentNum, String year, String course, String firstName, String lastName, String gender, Date birth, String status, String image) {
         this.studentNum = studentNum;
         this.year = year;
@@ -86,3 +88,4 @@ public class studentData {
     }
 
 }
+

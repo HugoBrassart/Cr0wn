@@ -210,7 +210,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="addStudents_form" layoutX="-20.0" prefHeight="534.0" prefWidth="642.0" style="-fx-background-color: white; -fx-background-radius: 20;" translateX="67.0" translateY="61.0">
+                        <AnchorPane fx:id="addStudents_form" layoutX="-20.0" prefHeight="534.0" prefWidth="642.0" style="-fx-background-color: white; -fx-background-radius: 20;" translateX="67.0" translateY="61.0" visible="false">
                            <children>
                               <AnchorPane prefHeight="290.0" prefWidth="642.0" style="-fx-background-color: #dfdfdf; -fx-background-radius: 20;">
                                  <children>
@@ -246,7 +246,7 @@
                                  </font>
                               </Label>
                               <ComboBox fx:id="addStudents_year" layoutX="93.0" layoutY="341.0" onAction="#addStudentsYearList" prefHeight="26.0" prefWidth="150.0" promptText="Choisissez" />
-                              <Label layoutX="29.0" layoutY="377.0" prefHeight="18.0" prefWidth="63.0" text="Cursus :">
+                              <Label layoutX="36.0" layoutY="377.0" prefHeight="18.0" prefWidth="53.0" text="Cours :">
                                  <font>
                                     <Font name="Bookman Old Style" size="14.0" />
                                  </font>
@@ -369,14 +369,14 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="availableCourse_form" layoutX="39.0" layoutY="51.0" prefHeight="543.0" prefWidth="655.0" visible="false">
+                        <AnchorPane fx:id="availableCourse_form" layoutX="39.0" layoutY="51.0" prefHeight="543.0" prefWidth="655.0">
                            <children>
                               <AnchorPane layoutX="17.0" layoutY="14.0" prefHeight="259.0" prefWidth="246.0" style="-fx-background-color: white; -fx-background-radius: 10;">
                                  <effect>
                                     <DropShadow />
                                  </effect>
                                  <children>
-                                    <Label alignment="CENTER_RIGHT" layoutX="37.0" layoutY="29.0" text="Cursus :">
+                                    <Label alignment="CENTER_RIGHT" layoutX="37.0" layoutY="29.0" text="Cours :">
                                        <font>
                                           <Font name="Bookman Old Style" size="15.0" />
                                        </font>
@@ -394,10 +394,10 @@
                                        </font>
                                     </Label>
                                     <TextField fx:id="availableCourse_degree" layoutX="102.0" layoutY="95.0" prefHeight="26.0" prefWidth="135.0" />
-                                    <Button fx:id="availableCourse_addBtn" layoutX="20.0" layoutY="152.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="Ajouter" />
-                                    <Button fx:id="availableCourse_updateBtn" layoutX="150.0" layoutY="152.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="Modifier" />
-                                    <Button fx:id="availableCourse_clearBtn" layoutX="20.0" layoutY="204.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="Zero" />
-                                    <Button fx:id="availableCourse_deleteBtn" layoutX="150.0" layoutY="204.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="80.0" text="Supprimer" />
+                                    <Button fx:id="availableCourse_addBtn" layoutX="20.0" layoutY="152.0" mnemonicParsing="false" onAction="#availableCourseAdd" prefHeight="35.0" prefWidth="80.0" text="Ajouter" />
+                                    <Button fx:id="availableCourse_updateBtn" layoutX="150.0" layoutY="152.0" mnemonicParsing="false" onAction="#availableCourseUpdate" prefHeight="35.0" prefWidth="80.0" text="Modifier" />
+                                    <Button fx:id="availableCourse_clearBtn" layoutX="20.0" layoutY="204.0" mnemonicParsing="false" onAction="#availableCourseClear" prefHeight="35.0" prefWidth="80.0" text="Zero" />
+                                    <Button fx:id="availableCourse_deleteBtn" layoutX="150.0" layoutY="204.0" mnemonicParsing="false" onAction="#availableCourseDelete" prefHeight="35.0" prefWidth="80.0" text="Supprimer" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="270.0" layoutY="14.0" prefHeight="518.0" prefWidth="378.0" style="-fx-background-color: white; -fx-background-radius: 10;">
@@ -405,9 +405,9 @@
                                     <DropShadow />
                                  </effect>
                                  <children>
-                                    <TableView fx:id="availableCourse_tableView" layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="348.0">
+                                    <TableView fx:id="availableCourse_tableView" layoutX="14.0" layoutY="14.0" onMouseClicked="#availableCourseSelect" prefHeight="500.0" prefWidth="348.0">
                                       <columns>
-                                        <TableColumn fx:id="availableCourse_col_course" prefWidth="81.5999755859375" text="Cursus" />
+                                        <TableColumn fx:id="availableCourse_col_course" prefWidth="81.5999755859375" text="Cours" />
                                         <TableColumn fx:id="availableCourse_col_description" prefWidth="197.5999755859375" text="Description" />
                                           <TableColumn fx:id="availableCourse_col_degree" prefWidth="69.5999755859375" text="Niveau" />
                                       </columns>

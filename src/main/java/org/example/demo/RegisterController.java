@@ -18,8 +18,9 @@ import java.sql.Statement;
 
 
 public class RegisterController {
-
 @FXML
+    public Button registerButton;
+    @FXML
 private Button cancelButton;
 @FXML
 private Label registrationMessageLabel;

@@ -34,7 +34,7 @@ public class DashboardController implements Initializable {
     private Statement statement;
     private ResultSet queryResult;
 
-private Image image;
+    private Image image;
 
     @FXML
     private Button addStudents_addBtn;
@@ -124,13 +124,13 @@ private Image image;
     private Button availableCourse_clearBtn;
 
     @FXML
-    private TableColumn<?, ?> availableCourse_col_course;
+    private TableColumn<courseData, String> availableCourse_col_course;
 
     @FXML
-    private TableColumn<?, ?> availableCourse_col_degree;
+    private TableColumn<courseData, String> availableCourse_col_degree;
 
     @FXML
-    private TableColumn<?, ?> availableCourse_col_description;
+    private TableColumn<courseData, String> availableCourse_col_description;
 
     @FXML
     private TextField availableCourse_course;
@@ -148,7 +148,7 @@ private Image image;
     private AnchorPane availableCourse_form;
 
     @FXML
-    private TableView<?> availableCourse_tableView;
+    private TableView<courseData> availableCourse_tableView;
 
     @FXML
     private Button availableCourse_updateBtn;
@@ -358,6 +358,229 @@ private Image image;
         addStudents_status.setItems(ObList);
     }
 
+    public void availableCourseAdd() {
+
+        String insertData = "INSERT INTO course (course,description,degree) VALUES(?,?,?)";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB = connectNow.getConnection();
+
+        try {
+            Alert alert;
+
+            if (availableCourse_course.getText().isEmpty()
+                    || availableCourse_description.getText().isEmpty()
+                    || availableCourse_degree.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous devez remplir tous les champs vides");
+                alert.showAndWait();
+            } else {
+                String checkData = "SELECT course FROM course WHERE course = '"
+                        + availableCourse_course.getText() + "'";
+
+                statement = connectDB.createStatement();
+                queryResult = statement.executeQuery(checkData);
+
+                if (queryResult.next()) {
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Le cours : " + availableCourse_course.getText() + " existe déjà");
+                    alert.showAndWait();
+                } else {
+                    preparedStatement = connectDB.prepareStatement(insertData);
+                    preparedStatement.setString(1, availableCourse_course.getText());
+                    preparedStatement.setString(2, availableCourse_description.getText());
+                    preparedStatement.setString(3, availableCourse_degree.getText());
+
+                    preparedStatement.executeUpdate();
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Le cours a été ajouté");
+                    alert.showAndWait();
+
+                    availableCourseShowListData();
+
+                    availableCourseClear();
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void availableCourseUpdate() {
+
+        String updateData = "UPDATE course SET description = '"
+                + availableCourse_description.getText() + "', degree = '"
+                + availableCourse_degree.getText() + "' WHERE course = '"
+                + availableCourse_course.getText() + "'";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB = connectNow.getConnection();
+
+        try {
+            Alert alert;
+
+            if (availableCourse_course.getText().isEmpty()
+                    || availableCourse_description.getText().isEmpty()
+                    || availableCourse_degree.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous devez remplir tous les champs vides");
+                alert.showAndWait();
+            } else {
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous voulez modifier le cours : " + availableCourse_course.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connectDB.createStatement();
+                    statement.executeUpdate(updateData);
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Cours modifié");
+                    alert.showAndWait();
+
+                    availableCourseShowListData();
+                    availableCourseClear();
+
+                } else {
+                    return;
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void availableCourseDelete() {
+
+        String deleteData = "DELETE FROM course WHERE course = '"
+                + availableCourse_course.getText() + "'";
+        
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB = connectNow.getConnection();
+
+        try {
+            Alert alert;
+
+            if (availableCourse_course.getText().isEmpty()
+                    || availableCourse_description.getText().isEmpty()
+                    || availableCourse_degree.getText().isEmpty()) {
+                alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous devez remplir tous les champs vides");
+                alert.showAndWait();
+            } else {
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Confirmation Message");
+                alert.setHeaderText(null);
+                alert.setContentText("Vous voulez supprimer le cours : " + availableCourse_course.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+
+                if (option.get().equals(ButtonType.OK)) {
+                    statement = connectDB.createStatement();
+                    statement.executeUpdate(deleteData);
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Message");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Cours supprimé");
+                    alert.showAndWait();
+
+
+                    availableCourseShowListData();
+                    availableCourseClear();
+
+                } else {
+                    return;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    public void availableCourseClear() {
+        availableCourse_course.setText("");
+        availableCourse_description.setText("");
+        availableCourse_degree.setText("");
+    }
+
+    public ObservableList<courseData> availableCourseListData() {
+
+        ObservableList<courseData> listData = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM course";
+
+        DatabaseConnection connectNow = new DatabaseConnection();
+        connectDB =connectNow.getConnection();
+
+        try {
+            courseData courseD;
+            preparedStatement = connectDB.prepareStatement(sql);
+            queryResult = preparedStatement.executeQuery();
+
+            while (queryResult.next()) {
+                courseD = new courseData(queryResult.getString("course"),
+                        queryResult.getString("description"),
+                        queryResult.getString("degree"));
+
+                listData.add(courseD);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return listData;
+    }
+
+    private ObservableList<courseData> availableCourseList;
+
+    public void availableCourseShowListData() {
+        availableCourseList = availableCourseListData();
+
+        availableCourse_col_course.setCellValueFactory(new PropertyValueFactory<>("course"));
+        availableCourse_col_description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        availableCourse_col_degree.setCellValueFactory(new PropertyValueFactory<>("degree"));
+
+        availableCourse_tableView.setItems(availableCourseList);
+
+    }
+
+    public void availableCourseSelect() {
+        courseData courseD = availableCourse_tableView.getSelectionModel().getSelectedItem();
+        int num = availableCourse_tableView.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1) {
+            return;
+        }
+
+        availableCourse_course.setText(courseD.getCourse());
+        availableCourse_description.setText(courseD.getDescription());
+        availableCourse_degree.setText(courseD.getDegree());
+
+    }
+
     public void logout() {
 
         try {
@@ -421,6 +644,7 @@ private Image image;
             availableCourse_form.setVisible(true);
             studentGrade_form.setVisible(false);
 
+            availableCourseShowListData();
 
         } else if (event.getSource() == studentGrade_btn) {
             home_form.setVisible(false);
@@ -435,10 +659,10 @@ private Image image;
     public void close(){
         System.exit(0);
     }
-public void minimize(){
-    Stage stage = (Stage) main_form.getScene().getWindow();
-    stage.setIconified(true);
-}
+    public void minimize(){
+        Stage stage = (Stage) main_form.getScene().getWindow();
+        stage.setIconified(true);
+    }
 
 
 
@@ -449,7 +673,7 @@ public void minimize(){
         addStudentsGenderList();
         addStudentsStatusList();
 
-
+        availableCourseShowListData();
     }
 
 

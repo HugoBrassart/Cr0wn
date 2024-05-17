@@ -22,6 +22,8 @@ public class LoginController {
     @FXML
     public Button loginButton;
     @FXML
+    public Button registerButton;
+    @FXML
     private Button closeButton;
     @FXML
 private Label loginMessageLabel;
@@ -80,6 +82,20 @@ private TextField usernameTextField;
             registerstage.setScene(new Scene(root, 900, 600));
             registerstage.show();
             loginButton.getScene().getWindow().hide();
+        } catch(Exception e){
+            e.printStackTrace();
+            e.getCause();
+        }
+    }
+
+    public void createRegister(){
+        try{
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("register.fxml")));
+            Stage registerstage = new Stage();
+            registerstage.initStyle(StageStyle.UNDECORATED);
+            registerstage.setScene(new Scene(root, 600, 400));
+            registerstage.show();
+
         } catch(Exception e){
             e.printStackTrace();
             e.getCause();
